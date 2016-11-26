@@ -1,6 +1,6 @@
 import curses
 
-from py2048.game import Game, Direction
+from py2048 import Game, Direction
 
 def playingmode(stdscr):
 	curses.curs_set(False)
@@ -39,3 +39,6 @@ def playingmode(stdscr):
 				gooddirs.append(d.__name__)
 		stdscr.addstr(7, 0, str(gooddirs))
 		game.displaycurses(stdscr)
+
+if __name__ == "__main__":
+	curses.wrapper(playingmode)

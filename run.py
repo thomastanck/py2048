@@ -2,10 +2,10 @@ import random
 import sys
 import copy
 
-from py2048.play import playingmode
-from py2048.test import testingmode
-from py2048.randomtest import randommode
-from py2048.randomsample import randomsamplemode
+from play import playingmode
+from test import testingmode
+from randomtest import randommode
+from randomsample import randomsamplemode
 
 def main():
 	"""

@@ -1,6 +1,6 @@
 import copy
 
-from py2048.game import Game, Direction
+from py2048 import Game, Direction
 
 def testingmode():
 	game = Game()
@@ -522,3 +522,6 @@ tests = [
 		]
 	),
 ]
+
+if __name__ == "__main__":
+	testingmode()

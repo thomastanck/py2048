@@ -1,7 +1,7 @@
 import curses
 import random
 
-from py2048.game import Game, Direction
+from py2048 import Game, Direction
 
 def randommode(stdscr):
 	curses.curs_set(False)
@@ -31,3 +31,6 @@ def randommode(stdscr):
 		else:
 			gooddirs.remove(direction)
 		game.displaycurses(stdscr)
+
+if __name__ == "__main__":
+	curses.wrapper(randommode)

@@ -39,6 +39,7 @@ def playingmode(stdscr):
 				gooddirs.append(d.__name__)
 		stdscr.addstr(7, 0, str(gooddirs))
 		game.displaycurses(stdscr)
+		stdscr.refresh()
 
 if __name__ == "__main__":
 	curses.wrapper(playingmode)

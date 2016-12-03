@@ -1,14 +1,14 @@
 import curses
 
-from py2048 import Game, Direction
+from py2048 import State, Direction
 
 def playingmode(stdscr):
 	curses.curs_set(False)
 	stdscr.clear()
 
-	game = Game()
-	game.generate_random()
-	game.displaycurses(stdscr)
+	state = State()
+	state = state.generate_random()
+	state.displaycurses(stdscr)
 	while True:
 		ch = stdscr.getch()
 		stdscr.clear()
@@ -25,20 +25,21 @@ def playingmode(stdscr):
 			break
 		else:
 			stdscr.addstr(5, 0, "Quit? Press q to quit")
-			game.displaycurses(stdscr)
+			state.displaycurses(stdscr)
 			continue
 		stdscr.addstr(5, 0, direction.__name__)
 		stdscr.addstr(5, 10, str(ch))
-		changed = game.move(direction)
+		newstate = state.execute(direction)
+		changed = state.board != newstate.board
 		stdscr.addstr(6, 0, str(changed))
 		if changed:
-			game.generate_random()
+			state = newstate.generate_random()
 		gooddirs = []
 		for d in Direction.dirs:
-			if game.move(d, drymove=True):
+			if state.execute(d).board != state.board:
 				gooddirs.append(d.__name__)
 		stdscr.addstr(7, 0, str(gooddirs))
-		game.displaycurses(stdscr)
+		state.displaycurses(stdscr)
 		stdscr.refresh()
 
 if __name__ == "__main__":

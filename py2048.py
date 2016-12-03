@@ -101,10 +101,10 @@ class State:
 
 	def generate_random(self):
 		out = State()
-		blanks = set()
+		blanks = []
 		for i in range(16):
 			if self.board[i] == 0:
-				blanks.add(i)
+				blanks.append(i)
 			else:
 				out.board[i] = self.board[i]
 		out.board[random.choice(blanks)] = 2 if random.randrange(10) == 0 else 1
@@ -116,8 +116,8 @@ class State:
 
 	def displaycurses(self, stdscr):
 		""" Curses version of display """
-		for row in range(4):
-			stdscr.addstr(row, 0, ' '.join(map(displaycharfor, self.board[4*n:4*n+4])))
+		for n in range(4):
+			stdscr.addstr(n, 0, ' '.join(map(displaycharfor, self.board[4*n:4*n+4])))
 		#stdscr.refresh()
 
 State._move_table = State.init_move_table()

@@ -1,35 +1,40 @@
 import copy
 
-from py2048 import Game, Direction
+from py2048 import State, Direction
 
 def testingmode():
-	game = Game()
+	state = State()
 	numfailed = 0
 	for start, direction, supposedtochange, finish in tests:
-		game.state = copy.deepcopy(start)
-		changed = game.move(direction)
-		# print(changed, supposedtochange, game.state, finish)
-		if changed != supposedtochange or game.state != finish:
-			printfailedtest(start, direction, supposedtochange, finish, changed, game)
+		start = [*start[0], *start[1], *start[2], *start[3]]
+		finish = [*finish[0], *finish[1], *finish[2], *finish[3]]
+
+		state.board = start[:]
+		newstate = state.execute(direction)
+
+		changed = state.board != newstate.board
+
+		if changed != supposedtochange or newstate.board != finish:
+			printfailedtest(start, direction, supposedtochange, finish, changed, state, newstate)
 			numfailed += 1
+
 	print('{}/{} tests failed'.format(numfailed, len(tests)))
 
-def printfailedtest(start, direction, supposedtochange, finish, changed, game):
-	tempgame = Game()
+def printfailedtest(start, direction, supposedtochange, finish, changed, state, newstate):
 	print('============')
 	print('Failed test:')
 	print('============')
 	print('Start:')
-	tempgame.state = copy.deepcopy(start)
-	tempgame.display()
+	state.display()
 	print('Direction:', direction.__name__)
 	print('Changed:', changed)
 	print('Finish:')
-	game.display()
+	newstate.display()
 	print('Expected changed:', supposedtochange)
 	print('Expected finish:')
-	tempgame.state = copy.deepcopy(finish)
-	tempgame.display()
+	tempstate = State()
+	tempstate.board = copy.deepcopy(finish)
+	tempstate.display()
 	print()
 
 
